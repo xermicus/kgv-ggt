@@ -1,4 +1,4 @@
-# kgv-ggt.py
+# kgv-ggt.py	
 
 # Hilfsfunktion, berechnet alle Primzahlen <= n
 def primes(n):
@@ -12,6 +12,20 @@ def primes(n):
 	
 	return result
 	
+
+# Hilfsfunktion für den Input
+def getnumbers():
+	result  = []
+	while True:
+		try:
+			result.append(int(input("Zahl: ")))
+		except ValueError as v:
+			if str(v)[-2] == "'":
+				if not result:
+					continue
+				return result
+			print("Oops! Falsche Eingabe, bitte erneut versuchen.")
+
 
 # Berechnet das kgV anhand der Primfaktorenzerlegung
 def kgv(numbers):
@@ -55,20 +69,6 @@ def ggt(numbers):
 	if rest == 0:
 		return min(numbers)		
 	return rest
-	
-
-# Helper für den Input
-def getnumbers():
-	result  = []
-	while True:
-		try:
-			result.append(int(input("Zahl: ")))
-		except ValueError as v:
-			if str(v)[-2] == "'":
-				if not result:
-					continue
-				return result
-			print("Oops! Falsche Eingabe, bitte erneut versuchen.")
 	
 	
 # Hauptprogramm
