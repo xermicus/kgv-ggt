@@ -20,10 +20,10 @@ def getnumbers():
 		try:
 			result.append(int(input("Zahl: ")))
 		except ValueError as v:
-			if str(v)[-2] == "'":
+			if str(v)[-1] + str(v)[-2] == "''":
 				if not result:
 					continue
-				return result
+				return sorted(result)
 			print("Oops! Falsche Eingabe, bitte erneut versuchen.")
 
 
@@ -41,7 +41,7 @@ def kgv(numbers):
 				numbers[i] /= primz[i][j][0]
 			if i == len(numbers) - 1:
 				result *= primz[0][j][0] ** primz[0][j][1]
-	
+					
 	return result
 
 
@@ -56,25 +56,20 @@ def ggt(numbers):
 		numbers[0] = numbers[1]
 		numbers[1] = numbers[i+1]
 	
-	if rest == 0:
-		return min(numbers)		
 	return rest
-	
+
 	
 # Hauptprogramm
 print("Willkommen zum kgV / ggT Rechner.")
 
 while True:
 	op = str(input("\nGib k ein für kgV, g für ggT oder etwas anderes um zu beenden: "))
-
 	if op == 'k':
 		print("kgV: Bitte gib ein paar Zahlen ein. Lass die Eingabe leer um fortzufahren.")
-		print("Das kgV deiner Zahlen lautet: " + str(kgv(getnumbers())))
-		
+		print("Das kgV deiner Zahlen lautet: " + str(kgv(getnumbers())))		
 	elif str(op) == 'g':
 		print("ggT: Bitte gib ein paar Zahlen ein. Lass die Eingabe leer um fortzufahren.")
-		print("Der ggT deiner Zahlen lautet: " + str(ggt(getnumbers())))
-		
+		print("Der ggT deiner Zahlen lautet: " + str(ggt(getnumbers())))		
 	else:
 		print("Goodbye.")
 		break
