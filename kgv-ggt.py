@@ -27,30 +27,20 @@ def getnumbers():
 			print("Oops! Falsche Eingabe, bitte erneut versuchen.")
 
 
-# Berechnet das kgV anhand der Primfaktorenzerlegung
+# Berechnet das kgV anhand der Primfaktorzerlegung
 def kgv(numbers):
-	# Berechne die Primzahlen
+	result = 1
 	primz = []
 	for i in range(0, len(numbers)):
 		primz.append(primes(max(numbers)))
-		
-		
-	# Berechne die Primfaktorenzerlegung
-	for i in range(0, len(numbers)):
 		for j in range(0, len(primz[i])):
 			while numbers[i] % primz[i][j][0] == 0:
 				primz[i][j][1] += 1
+				if primz[i][j][1] > primz[0][j][1]:
+					primz[0][j][1] = primz[i][j][1]
 				numbers[i] /= primz[i][j][0]
-				
-	# Berechne das Resultat	
-	result = 1		
-	val = []			
-	for i in range(0, len(primz[0])):
-		val.append([primz[0][i][0], 0])
-		for j in range(0, len(primz)):
-			if primz[j][i][1] > val[i][1]:
-				val[i][1] = primz[j][i][1]
-		result *= val[i][0] ** val[i][1]	
+			if i == len(numbers) - 1:
+				result *= primz[0][j][0] ** primz[0][j][1]
 	
 	return result
 
@@ -64,7 +54,7 @@ def ggt(numbers):
 			numbers[0] = numbers[1]
 			numbers[1] = rest
 		numbers[0] = numbers[1]
-		numbers[1] = numbers[1+i]
+		numbers[1] = numbers[i+1]
 	
 	if rest == 0:
 		return min(numbers)		
