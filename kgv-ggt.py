@@ -48,6 +48,12 @@ def kgv(numbers):
 # Berechnet das kgV nach euklidschem Algorithmus
 def kgve(numbers):
 	return functools.reduce(lambda a,b: a * b // ggt([a, b]), numbers)
+	# Weniger "pythonisch" und ohne functools:	
+	'''for i in range(0, len(numbers)-1):
+		numbers[0] *= numbers[1] // ggt([numbers[0], numbers[1]])
+		numbers[1] = numbers[i+1]
+	
+	return 	numbers[0] * numbers[1] // ggt([numbers[0], numbers[1]])'''
 	
 
 # Berechnet den ggT nach euklidschem Algorithmus	
