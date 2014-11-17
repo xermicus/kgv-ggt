@@ -42,20 +42,16 @@ def kgv(numbers):
 		result *= i
 		
 	return result
-
-
-# Berechnet den ggT nach euklidschem Algorithmus
-def ggt(numbers):
-	result = 0	
-	for i in range(0, len(numbers)-1):
-		while numbers[0] % numbers[1] != 0:
-			result = numbers[0] % numbers[1]
-			numbers[0] = numbers[1]
-			numbers[1] = result
-		numbers[0] = numbers[1]
-		numbers[1] = numbers[i+1]
 	
-	return result
+
+# Berechnet das kgV nach euklidschem Algorithmus
+def ggt(numbers):
+	for i in range(0, len(numbers)-1):
+		while numbers[1]:      
+			numbers[0], numbers[1] = numbers[1], numbers[0] % numbers[1]
+		numbers[1] = numbers[i+1]
+		
+	return numbers[0]
 
 	
 # Hauptprogramm
