@@ -1,16 +1,14 @@
 # kgv-ggt.py	
 
 # Hilfsfunktion, berechnet alle Primzahlen <= n
-def primes(n):
-	result = []
-	for i in range(2, n+1):
-		for j in range(2, int(i/2)+1):
-			if i % j == 0:
-				break
-		else:
-			result.append([i, 0])
-	
-	return result
+# Diese Funktion wurde von untenstehendem Link entnommen und leicht angepasst, besten Dank:
+# http://stackoverflow.com/questions/2068372/fastest-way-to-list-all-primes-below-n/3035188#3035188
+def primes2(n):
+    sieve = [True] * (n//2)
+    for i in range(3,int(n**0.5)+1,2):
+        if sieve[i//2]:
+            sieve[i*i//2::i] = [False] * ((n-i*i-1)//(2*i)+1)            
+    return [[2,0]] + [[2*i+1,0] for i in range(1,n//2) if sieve[i]]
 	
 
 # Hilfsfunktion für den Input
@@ -29,34 +27,35 @@ def getnumbers():
 
 # Berechnet das kgV anhand der Primfaktorzerlegung
 def kgv(numbers):
-	result = 1
-	primz = []
+	result = 1		
+	primz = primes2(max(numbers)+1)
+	
 	for i in range(0, len(numbers)):
-		primz.append(primes(max(numbers)))
-		for j in range(0, len(primz[i])):
-			while numbers[i] % primz[i][j][0] == 0:
-				primz[i][j][1] += 1
-				if primz[i][j][1] > primz[0][j][1]:
-					primz[0][j][1] = primz[i][j][1]
-				numbers[i] /= primz[i][j][0]
-			if i == len(numbers) - 1:
-				result *= primz[0][j][0] ** primz[0][j][1]
-					
+		for j in range(0, len([p[0] for p in primz if p[0] < numbers[i]+1])):
+			c = 0
+			while numbers[i] % primz[j][0] == 0:
+				c += 1
+				numbers[i] /= primz[j][0]
+			if c > primz[j][1]:
+				primz[j][1] = c	
+	for i in [ r[0] ** r[1] for r in primz if r[1] > 0]:
+		result *= i
+		
 	return result
 
 
 # Berechnet den ggT nach euklidschem Algorithmus
 def ggt(numbers):
-	rest = 0	
+	result = 0	
 	for i in range(0, len(numbers)-1):
 		while numbers[0] % numbers[1] != 0:
-			rest = numbers[0] % numbers[1]
+			result = numbers[0] % numbers[1]
 			numbers[0] = numbers[1]
-			numbers[1] = rest
+			numbers[1] = result
 		numbers[0] = numbers[1]
 		numbers[1] = numbers[i+1]
 	
-	return rest
+	return result
 
 	
 # Hauptprogramm
