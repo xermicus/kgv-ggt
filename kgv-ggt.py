@@ -1,4 +1,5 @@
 # kgv-ggt.py	
+import functools
 
 # Hilfsfunktion, berechnet alle Primzahlen <= n
 # Diese Funktion wurde von untenstehendem Link entnommen und leicht angepasst, besten Dank:
@@ -45,6 +46,11 @@ def kgv(numbers):
 	
 
 # Berechnet das kgV nach euklidschem Algorithmus
+def kgve(numbers):
+	return functools.reduce(lambda a,b: a * b // ggt([a, b]), numbers)
+	
+
+# Berechnet den ggT nach euklidschem Algorithmus	
 def ggt(numbers):
 	for i in range(0, len(numbers)-1):
 		while numbers[1]:      
@@ -61,7 +67,7 @@ while True:
 	op = str(input("\nGib k ein für kgV, g für ggT oder etwas anderes um zu beenden: "))
 	if op == 'k':
 		print("kgV: Bitte gib ein paar Zahlen ein. Lass die Eingabe leer um fortzufahren.")
-		print("Das kgV deiner Zahlen lautet: " + str(kgv(getnumbers())))		
+		print("Das kgV deiner Zahlen lautet: " + str(kgve(getnumbers())))		
 	elif str(op) == 'g':
 		print("ggT: Bitte gib ein paar Zahlen ein. Lass die Eingabe leer um fortzufahren.")
 		print("Der ggT deiner Zahlen lautet: " + str(ggt(getnumbers())))		
